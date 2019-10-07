@@ -7,11 +7,14 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
+        self.color = "white"
+
     def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
         """
         self.vertices[vertex] = set()
+    
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
@@ -61,7 +64,19 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        # From the starting vertex
+        # pass in each child vertex to dft_recursive
+
+        if starting_vertex.color == "black":
+            return
+        
+        print(starting_vertex)
+        starting_vertex.color = "black"
+
+        for next_vert in self.vertices[starting_vertex]:
+            self.dft_recursive(next_vert)
+
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -143,6 +158,7 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("starting dft recursive")
     graph.dft_recursive(1)
 
     '''
