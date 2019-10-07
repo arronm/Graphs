@@ -76,22 +76,70 @@ class Graph:
         for next_vert in self.vertices[starting_vertex]:
             self.dft_recursive(next_vert)
 
-
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        if starting_vertex == destination_vertex:
+            print(starting_vertex)
+            return
+
+        queue = Queue()
+        visited = set()
+        previous = {}
+        queue.enqueue(starting_vertex)
+        while queue.size() > 0:
+            vertex = queue.dequeue()
+            
+            if vertex not in visited:
+                visited.add(vertex)
+                if vertex == destination_vertex:
+                    current_vert = destination_vertex
+                    path = []
+                    while current_vert != starting_vertex:
+                        path.append(current_vert)
+                        current_vert = previous[current_vert]
+                    path.append(starting_vertex)
+                    path.reverse()
+                    return path
+
+                for next_vert in self.vertices[vertex]:
+                    if not next_vert in previous:
+                        previous[next_vert] = vertex
+                    queue.enqueue(next_vert)
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+        previous = {}
 
+        stack.push(starting_vertex)
+        while stack.size() > 0:
+            vertex = stack.pop()
+
+            if vertex not in visited:
+                visited.add(vertex)
+                if vertex == destination_vertex:
+                    current_vert = destination_vertex
+                    path = []
+                    while current_vert != starting_vertex:
+                        path.append(current_vert)
+                        current_vert = previous[current_vert]
+                    path.append(starting_vertex)
+                    path.reverse()
+                    return path
+                
+                for next_vert in self.vertices[vertex]:
+                    if not next_vert in previous:
+                        previous[next_vert] = vertex
+                    stack.push(next_vert)
 
 
 
