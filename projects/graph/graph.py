@@ -7,7 +7,7 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
-        self.visited = set()
+        # self.visited = set()
 
     def add_vertex(self, vertex):
         """
@@ -58,7 +58,7 @@ class Graph:
                 for next_vert in self.vertices[vertex]:
                     stack.push(next_vert)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
@@ -66,16 +66,20 @@ class Graph:
         """
         # From the starting vertex
         # pass in each child vertex to dft_recursive
+        # if visited == None:
+        #     visited = set()
         
-        if starting_vertex in self.visited:
-            return
+        # if starting_vertex in visited:
+        #     return
+
         
         print(starting_vertex)
-        self.visited.add(starting_vertex)
+        visited.add(starting_vertex)
 
         for next_vert in self.vertices[starting_vertex]:
-            self.dft_recursive(next_vert)
-
+            if next_vert not in visited:
+                self.dft_recursive(next_vert, visited)
+        
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -89,26 +93,39 @@ class Graph:
         queue = Queue()
         visited = set()
         previous = {}
-        queue.enqueue(starting_vertex)
-        while queue.size() > 0:
-            vertex = queue.dequeue()
-            
-            if vertex not in visited:
-                visited.add(vertex)
-                if vertex == destination_vertex:
-                    current_vert = destination_vertex
-                    path = []
-                    while current_vert != starting_vertex:
-                        path.append(current_vert)
-                        current_vert = previous[current_vert]
-                    path.append(starting_vertex)
-                    path.reverse()
-                    return path
+        queue.enqueue([starting_vertex])
 
+        while queue.size() > 0:
+            path = queue.dequeue()
+            vertex = path[-1]
+            if vertex not in visited:
+                if vertex == destination_vertex:
+                    return path
+                visited.add(vertex)
                 for next_vert in self.vertices[vertex]:
-                    if not next_vert in previous:
-                        previous[next_vert] = vertex
-                    queue.enqueue(next_vert)
+                    next_path = list(path)
+                    next_path.append(next_vert)
+                    queue.enqueue(next_path)
+
+        # while queue.size() > 0:
+        #     vertex = queue.dequeue()
+            
+        #     if vertex not in visited:
+        #         visited.add(vertex)
+        #         if vertex == destination_vertex:
+        #             current_vert = destination_vertex
+        #             path = []
+        #             while current_vert != starting_vertex:
+        #                 path.append(current_vert)
+        #                 current_vert = previous[current_vert]
+        #             path.append(starting_vertex)
+        #             path.reverse()
+        #             return path
+
+        #         for next_vert in self.vertices[vertex]:
+        #             if not next_vert in previous:
+        #                 previous[next_vert] = vertex
+        #             queue.enqueue(next_vert)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -208,6 +225,8 @@ if __name__ == '__main__':
     '''
     print("starting dft recursive")
     graph.dft_recursive(1)
+    print("starting dft recursive 2")
+    graph.dft_recursive(2)
 
     '''
     Valid BFS path:
