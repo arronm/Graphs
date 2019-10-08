@@ -23,6 +23,9 @@ class AncestorTree:
         if not (child in self.family and parent in self.family):
             raise KeyError("Child or parent are missing in family, cannot connect")
         self.family[child].add(parent)
+    
+    def get_member(self, member):
+        return self.family[member]
 
 def earliest_ancestor(ancestors, starting_node):
     # For each Tuple in ancestors, create a node and a directed edge
@@ -38,6 +41,12 @@ def earliest_ancestor(ancestors, starting_node):
     print(tree.family)
     # Perform a DFT from starting node
     stack = Stack()
+    stack.push(starting_node)
+    while stack.size() > 0:
+        member = stack.pop
+        for relation in tree.get_member(member):
+            print(relation)
+
     # At the end of each path (no further nodes)
     # if this node distance >= furthest
     #   if node distance == furthest and node > furthest:
