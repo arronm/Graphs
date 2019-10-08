@@ -50,7 +50,10 @@ class SocialGraph:
         # Add users
 
         # for user in range(len(numUsers)):
-        #   add new user
+        for _ in range(numUsers):
+            # add new user
+            self.addUser('Tim')  # Everyone is named Tim.
+
 
 
         # Create friendships
