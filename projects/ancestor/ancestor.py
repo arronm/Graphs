@@ -38,20 +38,34 @@ def earliest_ancestor(ancestors, starting_node):
         tree.add_member(relation[0])
         tree.add_member(relation[1])
         tree.add_relation(relation)
-    print(tree.family)
     # Perform a DFT from starting node
     stack = Stack()
     stack.push(starting_node)
-    while stack.size() > 0:
-        member = stack.pop
-        for relation in tree.get_member(member):
-            print(relation)
+    visited = {}
+    visited[starting_node] = 0
+    furthest = starting_node
 
-    # At the end of each path (no further nodes)
-    # if this node distance >= furthest
-    #   if node distance == furthest and node > furthest:
-    #       continue
-    #   replace furthest
+    while stack.size() > 0:
+        member = stack.pop()
+
+        for relation in tree.get_member(member):
+            if relation in visited:
+                continue
+            visited[relation] = visited[member] + 1
+            stack.push(relation)
+
+        # At the end of each path (no further nodes)
+        # if this node distance >= furthest
+        if visited[member] >= visited[furthest]:
+            # if node distance == furthest and node > furthest:
+            if visited[member] == visited[furthest] and member > furthest:
+                continue
+            # replace furthest
+            furthest = member
+
+    if furthest == starting_node:
+        return -1
+    return furthest
 
     '''
             6   7   9
@@ -64,7 +78,12 @@ def earliest_ancestor(ancestors, starting_node):
     '''
     # pass
 
+    # 9 {8} >>> visited = {9: 0}
+    # 8 {11, 4} >>> visited = {9: 0, 8: 1}
+    # 11 {} >>> visited = {9: 0, 8: 1, 11: 2}
+    # 4 {} >>> visited = {9: 0, 8: 1, 11: 2, 4: 2}
+
 
 if __name__ == "__main__":
-    test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-    earliest_ancestor(test_ancestors, 6)
+    test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (11, 8), (8, 9), (4, 8), (10, 1)]
+    earliest_ancestor(test_ancestors, 2)
