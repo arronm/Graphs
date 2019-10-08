@@ -21,6 +21,7 @@ class SocialGraph:
         else:
             self.friendships[userID].add(friendID)
             self.friendships[friendID].add(userID)
+        # TODO: What about a case where userID or friendID does not exist in self.users?
 
     def addUser(self, name):
         """
@@ -48,7 +49,16 @@ class SocialGraph:
 
         # Add users
 
+        # for user in range(len(numUsers)):
+        #   add new user
+
+
         # Create friendships
+
+        # while totalFriendships < (numUsers * avgFriendships)
+        #   Choose a random person that is
+        #   1) Not this person
+        #   2) Not already in this persons friends
 
     def getAllSocialPaths(self, userID):
         """
@@ -68,5 +78,5 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populateGraph(10, 2)
     print(sg.friendships)
-    connections = sg.getAllSocialPaths(1)
-    print(connections)
+    # connections = sg.getAllSocialPaths(1)
+    # print(connections)
