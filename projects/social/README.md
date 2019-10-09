@@ -40,21 +40,29 @@ Now that you have a graph full of users and friendships, you can crawl through t
 {1: [1], 8: [1, 8], 10: [1, 10], 5: [1, 5], 2: [1, 10, 2], 6: [1, 10, 6], 7: [1, 10, 2, 7]}
 ```
 Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social network.
-
+̄͞f
 * Hint 1: What kind of graph search guarantees you a shortest path?
 * Hint 2: Instead of using a `set` to mark users as visited, you could use a `dictionary`. Similar to sets, checking if something is in a dictionary runs in O(1) time. If the visited user is the key, what would the value be?
 
 ## 3. Questions
 
 1. To create 100 users with an average of 10 friends each, how many times would you need to call `addFriendship()`? Why?
+> You would need ( U * F̅ ) / 2 where U is number of users and F̅ is average friends
+
+> Reasoning: Friends are two way relationships
 
 2. If you create 1000 users with an average of 5 random friends each, what percentage of other users will be in a particular user's extended social network? What is the average degree of separation between a user and those in his/her extended network?
 
+> 99% of other users will be in an extended social network.
+
+> Average degree of separation is 4
 
 
 ## 4. Stretch Goal
 
 1. You might have found the results from question #2 above to be surprising. Would you expect results like this in real life? If not, what are some ways you could improve your friendship distribution model for more realistic results?
+
+> Feels like a trick question, if using extended friends of friends of friends... I think it is true to real life. Though the degrees of separation seems too low. For better results I think you would want to mimic groups of friends instead of random dice rolls
 
 2. If you followed the hints for part 1, your `populateGraph()` will run in O(n^2) time. Refactor your code to run in O(n) time. Are there any tradeoffs that come with this implementation?
 

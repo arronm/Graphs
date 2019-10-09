@@ -102,12 +102,19 @@ class SocialGraph:
                 for next_user in self.friendships[user]:
                     queue.enqueue([*path, next_user])
 
+        count = 0;
+        for f in visited:
+            count += len(visited[f]) - 1
+        
+        print(f'Average Degrees of Separation: {count / len(visited)}')
+        # print(len(visited))
+
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populateGraph(1000, 5)
-    print(sg.friendships)
+    # print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
-    print(connections)
+    # print(connections)
